@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Quiz</title>
+    <style>
+        button {
+            background-color: #bdf;
+            margin: 10px;
+            padding: 10px;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #9cf;
+        }
+
+        #choices-ctr button {
+            width:80vw;
+            padding: 20px 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <audio id="sample" preload="auto"></audio>
+    <button id="play-btn">Play</button>
+    <div id="choices-ctr">
+    </div>
+   <script>
+        const tracks = {
+            "Beethoven":["music/Beethoven-sym-3-1st.mp3"],
+            "Brahms":["music/Brahms-sym-4-3rd.mp3"],
+            "Debussy":["music/Debussy-la-mer.mp3"],
+            "Dvorak":["music/Dvorak-ser-op22-4th.mp3"],
+            "Handel":["music/Handel-sui-2-alla.mp3"],
+            "Mozart":["music/Mozart-pcon-22-3rd.mp3"],
+            "Stravinsky":["music/Strav-Rite-of-Spring-beginning.mp3"],
+            "Tchaikovsky":["music/Tchai-sym-6-4th.mp3"],
+        };
+
+        const sample = document.querySelector('#sample');
+        const playBtn = document.querySelector('#play-btn');
+        const choicesCtr = document.querySelector('#choices-ctr');
+
+        // populate choices container
+        for (let i in tracks){
+            var btn = document.createElement("button");
+            btn.innerHTML = i;
+            choicesCtr.appendChild(btn);
+        }
+
+        var start = 0;
+        var max = 0;
+        
+        var trackKeys = Object.keys(tracks);
+        var composer = trackKeys[trackKeys.length * Math.random() << 0];
+        var track = tracks[composer];
+        sample.src = track[0];
+        console.log(track)
+
+        sample.addEventListener('loadeddata', () => {
+            sample.currentTime = start = Math.round(Math.random() * sample.duration - 10);
+            console.log(sample.currentTime)
+        });
+
+        playBtn.addEventListener('click', () => {
+            sample.play();
+            setTimeout(() => {
+                sample.pause();
+                sample.currentTime = start;
+            }, 10000)
+        })
+        choicesCtr.querySelectorAll("button").forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.innerHTML.toLowerCase() == composer.toLowerCase())
+                {
+                    alert("Correct!");
+                    composer = trackKeys[trackKeys.length * Math.random() << 0];
+                    track = tracks[composer];
+                    console.log(track)
+                    sample.pause();
+                    sample.src = track[0];
+                }
+            })
+        })
+   </script>
+</body>
+</html>
