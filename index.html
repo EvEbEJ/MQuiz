@@ -62,7 +62,7 @@
         var trackKeys = Object.keys(tracks);
         var composer = trackKeys[trackKeys.length * Math.random() << 0];
         var track = tracks[composer];
-        sample.src = track[0];
+        sample.src = 'MQuiz/' + track[0];
         console.log(track)
 
         sample.addEventListener('loadeddata', () => {
