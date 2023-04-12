@@ -12,8 +12,10 @@ const tracks = {
 const sample = document.querySelector('#sample');
 const playBtn = document.querySelector('#play-btn');
 const choicesCtr = document.querySelector('#choices-ctr');
-const volumeBar = document.querySelector("#volume-bar")
-const pointSpan = document.querySelector("#points")
+const volumeBar = document.querySelector("#volume-bar");
+const pointSpan = document.querySelector("#points");
+const streakSpan = document.querySelector("#streak");
+const wrongSpan = document.querySelector("#wrong");
 
 // populate choices container
 for (let i in tracks){
@@ -24,6 +26,15 @@ for (let i in tracks){
 
 var points = 0;
 pointSpan.innerHTML = points;
+
+var streak = 0;
+streakSpan.innerHTML = streak;
+
+var wrong = 0;
+wrongSpan.innerHTML = streak;
+
+
+var attempts = 0;
 
 var start = 0;
 var max = 0;
@@ -58,14 +69,39 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
             sample.pause();
 
             // update points
-            points += 1;
-            pointSpan.innerHTML = points;
+            points ++;
+            pointSpan.innerHTML = points; 
+            
+            // update streak
+            if (attempts == 0)
+            {
+                streak ++;
+                streakSpan.innerHTML = streak;
+                if (streak % 3 == 0 && streak > 0)
+                {
+                    points ++;
+                }
+            }
+
+            // reset attempts
+            attempts = 0
 
             // reload music
             composer = trackKeys[trackKeys.length * Math.random() << 0];
             track = tracks[composer];
             console.log(track);
             sample.src = 'MQuiz/' + track[0];
+        }
+        // wrong choice
+        else {
+            attempts ++;
+            streak = 0;
+            streakSpan.innerHTML = streak;
+            if (attempts == 1)
+            {
+                wrong ++;
+                wrongSpan.innerHTML = wrong;
+            }
         }
     })
 })
