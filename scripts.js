@@ -155,12 +155,11 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
                     sample.pause();
 
                     // update hi score
-                    if (currentHi > parseInt(hiScore))
+                    if (currentHi > parseInt(hiScore) || !hiScore)
                     {
                         localStorage.setItem("hiScore", currentHi.toString())
                         hiScore = localStorage.getItem("hiScore");
                     }
-
                     // display end page
                     endPage.style.display = "flex";
                     hiScoreSpan.innerHTML = hiScore;                    
