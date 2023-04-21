@@ -173,7 +173,7 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
             }
             else if (attempts == 3)
             {
-
+                //TODO: Reveal answer
             }
         }
     })
