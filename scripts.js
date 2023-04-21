@@ -25,6 +25,7 @@ const restartBtn = document.querySelector("#restart-btn");
 const hiScoreSpan = document.querySelector("#hi")
 
 var hiScore = localStorage.getItem("hiScore");
+var currentHi = 0;
 
 var soundEffects = true;
 
@@ -48,12 +49,12 @@ wrongSpan.innerHTML = wrong;
 var attempts = 0;
 
 var start = 0;
-var max = 0;
 
 var trackKeys = Object.keys(tracks);
 
 // load music
-var composer = trackKeys[trackKeys.length * Math.random() << 0];
+var index = trackKeys.length * Math.random() << 0
+var composer = trackKeys[index];
 var track = tracks[composer];
 sample.src = 'MQuiz/' + track[0];
 console.log(track)
@@ -105,6 +106,10 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
             if (attempts == 0)
             {
                 streak ++;
+                if (streak > currentHi) 
+                {
+                    currentHi ++;
+                }
                 streakSpan.innerHTML = streak;
                 streakBar.style.animationPlayState = "running";
                 streakFlash = setTimeout(() => {
@@ -150,9 +155,9 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
                     sample.pause();
 
                     // update hi score
-                    if (streak > parseInt(hiScore))
+                    if (currentHi > parseInt(hiScore))
                     {
-                        localStorage.setItem("hiScore", streak.toString())
+                        localStorage.setItem("hiScore", currentHi.toString())
                         hiScore = localStorage.getItem("hiScore");
                     }
 
@@ -166,6 +171,10 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
                     }
                 }
             }
+            else if (attempts == 3)
+            {
+
+            }
         }
     })
 })
@@ -175,6 +184,7 @@ restartBtn.addEventListener("click", () => {
     points = 0;
     wrong = 0;
     streak = 0;
+    attempts = 0;
 
     pointSpan.innerHTML = points;
     wrongSpan.innerHTML = wrong;
