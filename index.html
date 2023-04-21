@@ -8,16 +8,32 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div>
-        Points: <span id="points"></span>
-        Streak: <span id="streak"></span>
-        Wrong: <span id="wrong"></span>
+    <div id="ptbar" class="iconbar">
+        <i id="pt-icon" class="fa-solid fa-circle-check icons"></i> <span id="points"></span>
+    </div>
+    <div id="wrongbar" class="iconbar">
+        <i id="wrong-icon" class="fa-solid fa-circle-xmark icons"></i> <span id="wrong"></span>
+    </div>
+    <div id="streakbar" class="iconbar">
+        <i id="streak-icon" class="fa-solid fa-fire icons"></i> <span id="streak"></span>
     </div>
     <audio id="sample" preload="auto"></audio>
-    <input type="range" min="1" max="100" value="50" id="volume-bar">
+
     <button id="play-btn">Play</button>
     <div id="choices-ctr">
     </div>
+
+    <div id="restart-page">
+        <button id="restart-btn">
+            <i class="fa-solid fa-rotate-right"></i>
+        </button>
+        <div id="hibar" class="iconbar">
+            <i id="hi-icon" class="fa-solid fa-fire icons"></i> <span id="hi"></span>
+        </div>
+    </div>
+
     <script src="scripts.js"></script>
+    <script src="https://kit.fontawesome.com/06b44fd96d.js" crossorigin="anonymous"></script>
+
 </body>
 </html>
