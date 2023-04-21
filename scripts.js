@@ -184,6 +184,7 @@ restartBtn.addEventListener("click", () => {
     wrong = 0;
     streak = 0;
     attempts = 0;
+    currentHi = 0;
 
     pointSpan.innerHTML = points;
     wrongSpan.innerHTML = wrong;
