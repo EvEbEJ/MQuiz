@@ -10,6 +10,7 @@
 <body>
     <div id="ptbar" class="iconbar">
         <i id="pt-icon" class="fa-solid fa-circle-check icons"></i> <span id="points"></span>
+        <div id="plus">+1</div>
     </div>
     <div id="wrongbar" class="iconbar">
         <i id="wrong-icon" class="fa-solid fa-circle-xmark icons"></i> <span id="wrong"></span>
@@ -19,7 +20,6 @@
     </div>
     <audio id="sample" preload="auto"></audio>
 
-    <button id="play-btn">Play</button>
     <div id="choices-ctr">
     </div>
 
@@ -27,9 +27,18 @@
         <button id="restart-btn">
             <i class="fa-solid fa-rotate-right"></i>
         </button>
+        <div id="hiptbar" class="iconbar">
+            <i id="hipt-icon" class="fa-solid fa-circle-check icons"></i> <span id="hipt"></span>
+        </div>
         <div id="hibar" class="iconbar">
             <i id="hi-icon" class="fa-solid fa-fire icons"></i> <span id="hi"></span>
         </div>
+    </div>
+
+    <div id="playbar">
+        <button id="play-btn" class="round-btn"><i class="fa-solid fa-play"></i></button>
+        <button id="settings-btn" class="round-btn"><i class="fa-solid fa-gear"></i></button>
+        <button id="info-btn" class="round-btn"><i class="fa-solid fa-circle-question"></i></button>
     </div>
 
     <script src="scripts.js"></script>

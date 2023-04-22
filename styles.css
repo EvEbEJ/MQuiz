@@ -18,6 +18,7 @@ button:hover {
 }
 
 .iconbar {
+    position: relative;
     margin: 10px;
     background-color: #fff;
     padding: 10px;
@@ -31,64 +32,68 @@ button:hover {
 }
 
 .iconbar span {
+    text-align: right;
+    width: 40px;
     font-size: 40px;
+    word-break: break-all; 
+    word-wrap: break-word;
 }
 
 @keyframes point-flash {
-    10% {
+    0% {
         background-color: #fff;
     }
     50% {
         background-color: rgb(70, 206, 70);
     }
-    90% {
+    100% {
         background-color: #fff;
     }
 }
 
 @keyframes wrong-flash {
-    10% {
+    0% {
         background-color: #fff;
     }
     50% {
         background-color: rgb(255, 49, 49);
     }
-    90% {
+    100% {
         background-color: #fff;
     }
 }
 
 @keyframes streak-flash {
-    10% {
+    0% {
         background-color: #fff;
     }
     50% {
         background-color: rgb(230, 155, 57);
     }
-    90% {
+    100% {
         background-color: #fff;
     }
 }
 
 #ptbar {
-    animation: point-flash 1s ease paused infinite;
+    animation: point-flash 1s ease paused;
 }
 
 #wrongbar {
-    animation: wrong-flash 1s ease paused infinite;
+    animation: wrong-flash 1s ease paused;
 }
 
 #streakbar {
     position: absolute;
     right: 0;
-    animation: streak-flash 1s ease paused infinite;
+    animation: streak-flash 1s ease paused;
 }
 
 .icons {
     font-size: 40px;
 }
 
-#pt-icon {
+#pt-icon, #hipt-icon {
     color: rgb(41, 192, 41);
 }
 
@@ -104,6 +109,39 @@ button:hover {
     color: rgb(216, 0, 0);
 }
 
+@keyframes plus-flash {
+    0% {
+        bottom: 0;
+        opacity: 0;
+    }
+    10% {
+        bottom: 0;
+        opacity: 1;
+    }
+    100% {
+        bottom: -30px;
+        opacity: 0;
+    }
+}
+
+#plus {
+    position: absolute;
+    left: 40%;
+    color: rgb(166, 255, 166);
+    font-weight: bold;
+    font-size: 30px;
+    animation: plus-flash 1s ease-in paused forwards;
+}
+
+.round-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #choices-ctr {
     display: flex;
     flex-direction: column;
@@ -114,22 +152,6 @@ button:hover {
     width:80vw;
     padding: 20px 10px;
     margin: 5px;
-}
-
-#volume-bar {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 20px;
-    background-color: #bbb;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-}
-
-#volume:hover {
-    opacity: 1;
 }
 
 #restart-page {
@@ -158,4 +180,17 @@ button:hover {
     width: 75px;
     height: 75px;
     text-align: center;
+}
+
+#playbar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: -1px 0px 4px 5px #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

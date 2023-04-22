@@ -1,3 +1,5 @@
+/** Playback and points system */
+
 const tracks = {
     "Beethoven":["music/Beethoven-sym-3-1st.mp3"],
     "Brahms":["music/Brahms-sym-4-3rd.mp3"],
@@ -19,13 +21,18 @@ const wrongBar = document.querySelector("#wrongbar");
 const pointSpan = document.querySelector("#points");
 const streakSpan = document.querySelector("#streak");
 const wrongSpan = document.querySelector("#wrong");
+const plusFlasher = document.querySelector("#plus");
 
 const endPage = document.querySelector("#restart-page");
 const restartBtn = document.querySelector("#restart-btn");
 const hiScoreSpan = document.querySelector("#hi")
+const hiPtScoreSpan = document.querySelector("#hipt")
 
 var hiScore = localStorage.getItem("hiScore");
 var currentHi = 0;
+
+var hiPtScore = localStorage.getItem("hiPtScore");
+var currentHiPt = 0;
 
 var soundEffects = true;
 
@@ -51,6 +58,20 @@ var attempts = 0;
 var start = 0;
 
 var trackKeys = Object.keys(tracks);
+
+
+
+// Text resizing
+const iconBar = document.querySelectorAll(".iconbar span")
+
+function resize(input) {
+    let fontSize = window.getComputedStyle(input).fontSize;
+    
+    if(input.clientHeight > 47){
+        input.style.fontSize = (parseFloat(fontSize) - 7) + 'px';
+        resize(input);
+    }
+}
 
 // load music
 var index = trackKeys.length * Math.random() << 0
@@ -89,18 +110,18 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
             }
             sample.pause();
 
-            // update points
-            points ++;
-            pointSpan.innerHTML = points;
+            // play right sound
             if (soundEffects)
             {
                 var audio = new Audio('MQuiz/sounds/right.wav');
                 audio.play(); 
             }
+
+            // flash points
+            pointBar.style.animation = "none";
+            pointBar.offsetHeight;
+            pointBar.style.animation = "";
             pointBar.style.animationPlayState = "running";
-            pointFlash = setTimeout(() => {
-                pointBar.style.animationPlayState = "paused";
-            }, 1000)
             
             // update streak
             if (attempts == 0)
@@ -110,25 +131,47 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
                 {
                     currentHi ++;
                 }
+                streakBar.style.animation = "none";
+                streakBar.offsetHeight;
+                streakBar.style.animation = "";
                 streakSpan.innerHTML = streak;
+                resize(streakSpan);
                 streakBar.style.animationPlayState = "running";
-                streakFlash = setTimeout(() => {
-                    streakBar.style.animationPlayState = "paused";
-                }, 1000)
                 if (streak % 3 == 0 && streak > 0)
                 {
+                    // play right sound
+                    if (soundEffects)
+                    {
+                        var audio = new Audio('MQuiz/sounds/streak.wav');
+                        audio.play(); 
+                    }
+                    
+                    plusFlasher.style.animation = "none";
+                    plusFlasher.offsetHeight;
+                    plusFlasher.style.animation = "";
+                    plusFlasher.style.animationPlayState = "running";
                     points ++;
                 }
+            }
+
+            // update points
+            points ++;
+            pointSpan.innerHTML = points;
+            resize(pointSpan);
+            if (points > currentHiPt) 
+            {
+                currentHiPt = points;
             }
 
             // reset attempts
             attempts = 0
 
             // reload music
-            composer = trackKeys[trackKeys.length * Math.random() << 0];
+            index = trackKeys.length * Math.random() << 0
+            composer = trackKeys[index];
             track = tracks[composer];
-            console.log(track);
             sample.src = 'MQuiz/' + track[0];
+            console.log(track)
         }
         // wrong choice
         else {
@@ -139,15 +182,16 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
             {
                 wrong ++;
                 wrongSpan.innerHTML = wrong;
+                resize(wrongSpan);
                 if (soundEffects)
                 {
                     var audio = new Audio('MQuiz/sounds/wrong.wav');
                     audio.play();
                 }
+                wrongBar.style.animation = "none";
+                wrongBar.offsetHeight;
+                wrongBar.style.animation = "";
                 wrongBar.style.animationPlayState = "running";
-                wrongFlash = setTimeout(() => {
-                    wrongBar.style.animationPlayState = "paused";
-                }, 1000)
                 if (wrong >= 3)
                 {
                     // stop audio
@@ -160,9 +204,16 @@ choicesCtr.querySelectorAll("button").forEach(btn => {
                         localStorage.setItem("hiScore", currentHi.toString())
                         hiScore = localStorage.getItem("hiScore");
                     }
+                    // update hi pt score
+                    if (currentHiPt > parseInt(hiPtScore) || !hiPtScore)
+                    {
+                        localStorage.setItem("hiPtScore", currentHiPt.toString())
+                        hiPtScore = localStorage.getItem("hiPtScore");
+                    }
                     // display end page
                     endPage.style.display = "flex";
-                    hiScoreSpan.innerHTML = hiScore;                    
+                    hiScoreSpan.innerHTML = hiScore;  
+                    hiPtScoreSpan.innerHTML = hiPtScore;                  
                     if (soundEffects)
                     {
                         var audio = new Audio('MQuiz/sounds/end.wav');
@@ -191,8 +242,9 @@ restartBtn.addEventListener("click", () => {
     streakSpan.innerHTML = streak;
 
     // load music
-    var composer = trackKeys[trackKeys.length * Math.random() << 0];
-    var track = tracks[composer];
+    index = trackKeys.length * Math.random() << 0
+    composer = trackKeys[index];
+    track = tracks[composer];
     sample.src = 'MQuiz/' + track[0];
     console.log(track)
     endPage.style.display = "";
