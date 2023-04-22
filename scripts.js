@@ -241,6 +241,10 @@ restartBtn.addEventListener("click", () => {
     wrongSpan.innerHTML = wrong;
     streakSpan.innerHTML = streak;
 
+    pointSpan.style.fontSize = "";
+    wrongSpan.style.fontSize = "";
+    streakSpan.style.fontSize = "";
+
     // load music
     index = trackKeys.length * Math.random() << 0
     composer = trackKeys[index];
